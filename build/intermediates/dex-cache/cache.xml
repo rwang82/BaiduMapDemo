@@ -2,39 +2,39 @@
 <items version="2" >
 
     <item
-        jar="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-703ef49c46f602236f9705af972707b18dee8a18.jar" />
-    </item>
-    <item
-        jar="/Users/apple/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-f4f248b90d0457da1de697648c4b9012313e729f.jar" />
-    </item>
-    <item
-        jar="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/pre-dexed/debug/classes-f09f00ba8c8cdd0c95172dda4ee767533bdf5a17.jar" />
-    </item>
-    <item
-        jar="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jar="C:\code\android\BaiduMapDemo\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/pre-dexed/debug/classes-87ac0b04097b1fe03a069f991e47d4162619e50a.jar" />
+        <dex dex="C:\code\android\BaiduMapDemo\app\build\intermediates\pre-dexed\debug\classes-9307aa9067f9e8df4803c84b097017b800dc01d9.jar" />
     </item>
     <item
-        jar="/Users/apple/code/android/BaiduMapDemo/app/libs/baidumapapi_v3_3_0.jar"
+        jar="C:\code\android\BaiduMapDemo\app\libs\baidumapapi_v3_3_0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="110659c4d195f1335d04be564045b6b8eb8d83f4">
-        <dex dex="/Users/apple/code/android/BaiduMapDemo/app/build/intermediates/pre-dexed/debug/baidumapapi_v3_3_0-65c64b41d605397adf5ca17e3b39a8e8da8dc450.jar" />
+        <dex dex="C:\code\android\BaiduMapDemo\app\build\intermediates\pre-dexed\debug\baidumapapi_v3_3_0-0b90ed658c18f50694b60c4cdb111d1507b4748b.jar" />
+    </item>
+    <item
+        jar="C:\android_sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="C:\code\android\BaiduMapDemo\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-32fe529be402465ad3d90dff5d286b9683a898c4.jar" />
+    </item>
+    <item
+        jar="C:\code\android\BaiduMapDemo\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\code\android\BaiduMapDemo\app\build\intermediates\pre-dexed\debug\classes-a4121fe6d22dfd64eac99b12567b8e81bb6afe37.jar" />
+    </item>
+    <item
+        jar="C:\code\android\BaiduMapDemo\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\code\android\BaiduMapDemo\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-54866bce331a2beacd19eda16f89f5b7113feb86.jar" />
     </item>
 
 </items>
