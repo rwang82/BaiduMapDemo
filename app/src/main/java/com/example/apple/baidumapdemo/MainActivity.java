@@ -17,6 +17,9 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
@@ -188,6 +191,17 @@ public class MainActivity extends ActionBarActivity {
                 int m = 0;
             }
 
+
+            //
+            MapStatus mMapStatus = new MapStatus.Builder()
+                    .target( point )
+                    .zoom(18)
+                    .build();
+            //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+            MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+            //改变地图状态
+            mBaiduMap.animateMapStatus(mMapStatusUpdate);
+
         }
     };
 
@@ -260,7 +274,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             mETLatitude.setText( String.valueOf( location.getLatitude() )  );
-            mETLatitude.setText( String.valueOf( location.getLongitude() )  );
+            mETLongitude.setText( String.valueOf( location.getLongitude() )  );
         }
     };
 
