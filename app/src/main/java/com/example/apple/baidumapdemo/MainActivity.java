@@ -1,10 +1,17 @@
 package com.example.apple.baidumapdemo;
 
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -21,6 +28,8 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.utils.CoordinateConverter;
 
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -30,6 +39,10 @@ public class MainActivity extends ActionBarActivity {
     private Button mBtnCleanMark = null;
     private EditText mETLatitude = null;
     private EditText mETLongitude = null;
+    private TextView mTVAddr = null;
+    private android.os.Handler mRecvHandler = null;
+    private LocationManager mLctMgr = null;
+//    public LocationClient mLocationClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +69,42 @@ public class MainActivity extends ActionBarActivity {
         //
         mETLatitude = (EditText) findViewById( R.id.et_lat );
         mETLongitude = (EditText) findViewById( R.id.et_lng );
+        //
+        findViewById( R.id.btn_location ).setOnClickListener( mOnClickLocation );
+        //
+        mTVAddr = (TextView)findViewById( R.id.tv_addr );
+        //
+        mLctMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
+
+        //
+        mRecvHandler = new android.os.Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch ( msg.what ) {
+                    case 0x08:
+                    {
+                        String strAddr = msg.getData().getString( "Addr" );
+                        MainActivity.this.mTVAddr.setText( strAddr );
+                    } break;
+                    case 0x09:
+                    {
+                        double dLat = msg.getData().getDouble( "Latitude" );
+                        double dLng = msg.getData().getDouble( "Longitude" );
+                        mETLatitude.setText( String.valueOf( dLat ) );
+                        mETLongitude.setText( String.valueOf( dLng ) );
+                    } break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        //
+        //
+//        mLocationClient = new LocationClient(getApplicationContext());
+//        mLocationClient.registerLocationListener( mBDLocationListen );
+//        mLocationClient.start();
+//        mLocationClient.requestLocation();
     }
 
     @Override
@@ -86,6 +135,14 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
             int b = 0;
+            String strAddr = reverseGeoCodeResult.getAddress();
+
+            Message msg = new Message();
+            msg.what = 0x08;
+            Bundle bundle = new Bundle();
+            bundle.putString("Addr", strAddr);
+            msg.setData(bundle);
+            mRecvHandler.sendMessage( msg );
         }
     };
     private View.OnClickListener mOnClickBtnSetMark = new View.OnClickListener() {
@@ -130,6 +187,7 @@ public class MainActivity extends ActionBarActivity {
             if( !geoCoder.reverseGeoCode( rgcOption ) ) {
                 int m = 0;
             }
+
         }
     };
 
@@ -140,4 +198,112 @@ public class MainActivity extends ActionBarActivity {
             int a = 0;
         }
     };
+
+
+    private LocationListener mLCTListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+
+            mETLatitude.setText( String.valueOf( location.getLatitude() )  );
+            mETLongitude.setText( String.valueOf( location.getLongitude() )  );
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            int a = 0;
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+            int a = 0;
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            int a = 0;
+        }
+    };
+    private View.OnClickListener mOnClickLocation = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            Criteria crtData = new Criteria();
+            crtData.setAccuracy( Criteria.ACCURACY_COARSE );
+            String strLP = MainActivity.this.mLctMgr.getBestProvider( crtData, true );
+            if ( strLP == null ) {
+                crtData.setAccuracy( Criteria.ACCURACY_COARSE );
+                strLP = MainActivity.this.mLctMgr.getBestProvider( crtData, true );
+            }
+            if ( strLP == null ) {
+                crtData.setAccuracy( Criteria.ACCURACY_LOW );
+                List<String> listLP = MainActivity.this.mLctMgr.getProviders( crtData, true );
+                if ( listLP.size() == 0 ) {
+                    listLP = MainActivity.this.mLctMgr.getProviders( true );
+                    if ( listLP.size() == 0 ) {
+                        listLP = MainActivity.this.mLctMgr.getAllProviders();
+
+                        if ( listLP.size() == 0 ) {
+                            int a = 0;
+                            return;
+                        }
+                    }
+                }
+
+                strLP = listLP.get( listLP.size() - 1 );
+            }
+
+            mLctMgr.requestLocationUpdates( strLP, 1000, 10, mLCTListener);
+            Location location = MainActivity.this.mLctMgr.getLastKnownLocation(strLP);
+            if ( location == null ) {
+                mLctMgr.requestSingleUpdate( strLP, mLCTListener, null );
+                return;
+            }
+
+            mETLatitude.setText( String.valueOf( location.getLatitude() )  );
+            mETLatitude.setText( String.valueOf( location.getLongitude() )  );
+        }
+    };
+
+//    private BDLocationListener mBDLocationListen = new BDLocationListener() {
+//        @Override
+//        public void onReceiveLocation(BDLocation location) {
+//            if (location == null)
+//                return ;
+//            StringBuffer sb = new StringBuffer(256);
+//            sb.append("time : ");
+//            sb.append(location.getTime());
+//            sb.append("\nerror code : ");
+//            sb.append(location.getLocType());
+//            sb.append("\nlatitude : ");
+//            sb.append(location.getLatitude());
+//            sb.append("\nlontitude : ");
+//            sb.append(location.getLongitude());
+//            sb.append("\nradius : ");
+//            sb.append(location.getRadius());
+//            if (location.getLocType() == BDLocation.TypeGpsLocation){
+//                sb.append("\nspeed : ");
+//                sb.append(location.getSpeed());
+//                sb.append("\nsatellite : ");
+//                sb.append(location.getSatelliteNumber());
+//            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation){
+//                sb.append("\naddr : ");
+//                sb.append(location.getAddrStr());
+//            }
+//
+//            Log.i( "info", sb.toString());
+//
+//            ///
+//            Message msg = new Message();
+//            msg.what = 0x09;
+//            Bundle bundle = new Bundle();
+//
+//            bundle.putDouble( "Latitude", location.getLatitude() );
+//            bundle.putDouble( "Longitude", location.getLongitude() );
+//            msg.setData(bundle);
+//            mRecvHandler.sendMessage( msg );
+//
+//        }
+//    };
+
+
 }
